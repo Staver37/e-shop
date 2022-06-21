@@ -49,14 +49,7 @@ class Product:
         products = []
         for product_tuple in products_list:
             #HW 1: try to optimize multiple parameters intro function
-            product = Product(
-                 product_tuple[0],
-                 product_tuple[1],
-                 product_tuple[2],
-                 product_tuple[3],
-                 product_tuple[4],
-                 product_tuple[5]
-            )
+            product = Product(*product_tuple)
             products.append(product)
         return  products    
     
@@ -65,14 +58,7 @@ class Product:
         product_l = Product.executeFetchlSQL(sql)
         if len(product_l) > 0:       
             product_tuple = product_l[0] # to optain ressult
-            product = Product(
-                  product_tuple[0],
-                  product_tuple[1],
-                  product_tuple[2],
-                  product_tuple[3],
-                  product_tuple[4],
-                  product_tuple[5]
-               )
+            product = Product(*product_tuple)
             return  product      
         else:
             return None

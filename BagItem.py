@@ -36,11 +36,7 @@ class BagItem:
         bagsI = []
         for bagI_tuple in bagsI_list:
             #HW 1: try to optimize multiple parameters intro function
-            bagI = BagItem(
-                 bagI_tuple[0],
-                 bagI_tuple[1],
-                 bagI_tuple[2]
-            )
+            bagI = BagItem(*bagI_tuple)
             bagsI.append(bagI)
         return  bagsI    
 
@@ -49,11 +45,7 @@ class BagItem:
         bagI_l = BagItem.executeFetchlSQL(sql)
         if len(bagI_l) > 0:       
             bagI_tuple = bagI_l[0] 
-            bagI = BagItem(
-                  bagI_tuple[0],
-                  bagI_tuple[1],
-                  bagI_tuple[2]
-               )
+            bagI = BagItem(*bagI_tuple)
             return  bagI      
         else:
             return None     
