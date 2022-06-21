@@ -1,5 +1,9 @@
 import psycopg2
+import hashlib
 conn = psycopg2.connect("dbname=e_shop user=postgres ")
+
+# to hide the password we will use HASHING
+# python: hashlib,bcrypt,......
 # Model 1
 class Client:
 
@@ -19,6 +23,15 @@ class Client:
             self.email = email
             self.phone = phone
             self.is_vip = is_vip
+            # HW1: apply hashing here
+            #       add a custom twist
+
+            secret_key = 'n2*>?/'
+            pssw = f'{password,4:} + {secret_key*22}'
+            hasher = hashlib.sha3_384(pssw.encode())
+            password = pssw
+            password = hasher.hexdigest()
+            
             self.password = password
    
     def executeUpdateSQL(self,sql ):
@@ -48,14 +61,7 @@ class Client:
         clients = []
         for client_tuple in clients_list:
             #HW 1: try to optimize multiple parameters intro function
-            client = Client(
-                 client_tuple[0],
-                 client_tuple[1],
-                 client_tuple[2],
-                 client_tuple[3],
-                 client_tuple[4],
-                 client_tuple[5]
-            )
+            client = Client(*client_tuple)
             clients.append(client)
         return  clients    
  #
@@ -65,14 +71,7 @@ class Client:
         client_l = Client.executeFetchlSQL(sql)
         if len(client_l) > 0:       
             client_tuple = client_l[0] # to optain ressult
-            client = Client(
-                  client_tuple[0],
-                  client_tuple[1],
-                  client_tuple[2],
-                  client_tuple[3],
-                  client_tuple[4],
-                  client_tuple[5]
-               )
+            client = Client(*client_tuple)
             return  client      
         else:
             return None
