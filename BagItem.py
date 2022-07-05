@@ -1,7 +1,8 @@
 import psycopg2
 conn = psycopg2.connect("dbname=e_shop user=postgres ")
+from .Model import Model
 # Model 1
-class BagItem:
+class BagItem(Model):
 
     def __init__(
 
@@ -15,27 +16,13 @@ class BagItem:
             self.product_id = product_id
             self.quantity = quantity
 
-    def executeUpdateSQL(self,sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       conn.commit() 
-       cursor.close()
-       conn.close()
-    
-    def executeFetchlSQL(sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       result = cursor.fetchall()
-       return result
+
      
     def all():    
         sql = f"SELECT * FROM \"BagItem\";"
         bagsI_list = BagItem.executeFetchlSQL(sql)
         bagsI = []
         for bagI_tuple in bagsI_list:
-            #HW 1: try to optimize multiple parameters intro function
             bagI = BagItem(*bagI_tuple)
             bagsI.append(bagI)
         return  bagsI    

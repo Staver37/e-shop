@@ -1,7 +1,9 @@
 import psycopg2
+
+from .Model import Model
 conn = psycopg2.connect("dbname=e_shop user=postgres ")
 # Model 1
-class Bag:
+class Bag(Model):
 
     def __init__(
 
@@ -13,21 +15,7 @@ class Bag:
             self.id = id                    
             self.client_id = client_id
 
-    def executeUpdateSQL(self,sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       conn.commit() 
-       cursor.close()
-       conn.close()
-
-    def executeFetchlSQL(sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       result = cursor.fetchall()
-       return result
-     
+ 
     def all():    
         sql = f"SELECT * FROM \"Bag\";"
         bags_list = Bag.executeFetchlSQL(sql)

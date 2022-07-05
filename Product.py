@@ -1,9 +1,7 @@
-
 import psycopg2
-conn = psycopg2.connect("dbname=e_shop user=postgres ")
-# Model 1
-class Product:
+from .Model import Model
 
+class Product(Model):
     def __init__(
 
         self,
@@ -15,36 +13,22 @@ class Product:
             quantity
     ):
 
-            self.id =id                    
+            self.id = id                    
             self.name = name
             self.price_value = price_value
             self.price_unit = price_unit
             self.bar_code = bar_code
             self.quantity = quantity
    
-    def executeUpdateSQL(self,sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       conn.commit() 
-       cursor.close()
-       conn.close()
 
-    def executeFetchlSQL(sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       result = cursor.fetchall()
-       return result
-   
    
     def delete(self):
        sql = (f"DELETE  FROM \"Product\" WHERE  id = {self.id};")
        self.executeUpdateSQL(sql)
        
 
-    def all():    
-        sql = f"SELECT * FROM \"Product\";"
+    def all(price_sort):    
+        sql = f"SELECT * FROM \"Product\" ORDER BY price_value {price_sort};"
         products_list = Product.executeFetchlSQL(sql)
         products = []
         for product_tuple in products_list:
@@ -66,9 +50,8 @@ class Product:
 
     def create(self):
        sql=(f"INSERT  INTO \"Product\"VALUES ({self.id},'{self.name}'\
-            ,{self.price_value},'{self.price_unit}','{self.bar_code}',\
+            ,'{self.price_value}','{self.price_unit}','{self.bar_code}',\
              {self.quantity});")
-       conn.commit() 
        self.executeUpdateSQL(sql)
 
 
@@ -84,4 +67,14 @@ class Product:
          return str(self)  
 
 
-    # HW2:  complete the code for the models : Bag, BagItem, Client     
+    # HW2:  complete the code for the models : Bag, BagItem, Client    
+
+    #   OOP inheritance
+    
+    
+    #     Model
+    #      v
+    #   Product
+    #   Client
+    #   Bag
+    #   BagItem

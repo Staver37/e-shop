@@ -1,3 +1,7 @@
+from .Model import Model
+
+
+from .Model import Model
 import psycopg2
 import hashlib
 conn = psycopg2.connect("dbname=e_shop user=postgres ")
@@ -5,7 +9,7 @@ conn = psycopg2.connect("dbname=e_shop user=postgres ")
 # to hide the password we will use HASHING
 # python: hashlib,bcrypt,......
 # Model 1
-class Client:
+class Client(Model):
 
     def __init__(
 
@@ -17,7 +21,6 @@ class Client:
             is_vip,
             password
     ):
-
             self.id =id                    
             self.name = name
             self.email = email
@@ -34,20 +37,6 @@ class Client:
             
             self.password = password
    
-    def executeUpdateSQL(self,sql ):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       conn.commit() 
-       cursor.close()
-       conn.close()
-
-    def executeFetchlSQL(sql):
-       conn = psycopg2.connect("dbname=e_shop user=postgres ")
-       cursor = conn.cursor()
-       cursor.execute(sql)
-       result = cursor.fetchall()
-       return result
    
    
     def delete(self):
@@ -60,7 +49,6 @@ class Client:
         clients_list = Client.executeFetchlSQL(sql)
         clients = []
         for client_tuple in clients_list:
-            #HW 1: try to optimize multiple parameters intro function
             client = Client(*client_tuple)
             clients.append(client)
         return  clients    
@@ -92,6 +80,3 @@ class Client:
 
     def __repr__(self):
          return str(self)  
-
-
-    # HW2:  complete the code for the models : Bag, BagItem, Client     
